@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Div Layout Template</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .top {
+      background-color: #f1f1f1;
+      height: 120px;
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .bottom {
+      background-color: #f1f1f1;
+      height: 120px;
+      width: 60%;
+      margin: 0 auto;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+    
+    .left {
+      background-color: #f1f1f1;
+      width: 180px;
+      height: calc(100vh - 200px);
+      position: fixed;
+      top: 100px;
+      left: 0;
+      text-align: center;
+    }
+    
+    .right {
+      background-color: #f1f1f1;
+      width: 180px;
+      height: calc(100vh - 200px);
+      position: fixed;
+      top: 100px;
+      right: 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    {% for order in orders %}
+      {% if order.is_active and order.place == 'header' %}
+          <img src="{{ order.image.url }}" alt="{{ order.user }}" style="width: 100%; height: 100%;">
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="bottom">
+  {% for order in orders %}
+    {% if order.is_active and order.place == 'footer' %}
+    <img src="{{ order.image.url }}" alt="{{order.user}}" style="width: 100%; height: 100%;">
+    {% endif %}
+  {% endfor %} 
+  </div>
+  <div class="left">
+  {% for order in orders %}
+    {% if order.is_active and order.place == 'left' %}
+    <img src="{{ order.image.url }}" alt="{{order.user}}" style="width: 100%; height: 100%;">
+    {% endif %}
+  {% endfor %} 
+  </div>
+  <div class="right">
+  {% for order in orders %}
+    {% if order.is_active and order.place == 'right' %}
+    <img src="{{ order.image.url }}" alt="{{order.user}}" style="width: 100%; height: 100%;">
+    {% endif %}
+  {% endfor %} 
+  </div>
+</body>
+</html>

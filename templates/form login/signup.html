@@ -1,0 +1,241 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+     <script src="https://kit.fontawesome.com/fc106cc491.js" crossorigin="anonymous"></script>
+     <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+     <script src="{% static 'js/signup.js' %}"></script>
+    <title>sign up</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+        <h2>Marketing</h2>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+             <li class="nav-item dropdown">
+               <li class="nav-item">
+                    <a class="nav-link active " aria-current="page" href="{% url 'home' %}">Home</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About us</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'service' %}">services</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'portfolio' %}">Our Work</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">contact us</a>
+               </li>
+               <li class="nav-item" id="logg">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+               </li>
+             </li>
+        </div>
+</nav>
+
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="inputForm w-75 m-5 p-5 text-center">
+                <h1 class="text-light">Please Register Here</h1>
+                <br>
+                <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="userName" id="userNameSignUp" class="form-control"
+                        placeholder="Enter your name">
+                    <div id="nameAlert" class="alert alert-danger my-2 d-none ">The Name is Invalid</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="email" name="email" id="signUpEmail" class="form-control"
+                        placeholder="Enter your email">
+                    <div id="emailAlert" class="alert alert-danger my-2 d-none ">The Email is Invalid</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" name="password" id="signUpPassword" class="form-control"
+                        placeholder="Enter your password">
+                    <div id="passAlert" class="alert alert-danger my-2 d-none ">The password is Invalid</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="file" name="image" id="image" class="form-control"
+                        placeholder="Choose your photo">
+                    <div id="" class="alert alert-danger my-2 d-none "></div>
+                </div>
+                <br>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <br>
+                <div class="form-group">
+                    <div class="alert text-success pt-3 d-none" id="success">success</div>
+                    <div class="alert text-danger pt-3 d-none" id="checkInput">All inputs is required</div>
+                    <div class="alert text-danger pt-3 d-none" id="checkExist">email already exists</div>
+                    <button type="submit" id="signUpButton" class="btn btn-outline-info btn-block mt-4">Sign Up</button>
+                </div>
+                <br>
+                </form>
+                <h6 class="text-white">already have an account ? <span><a href="{% url 'login' %}">Sign in</a></span> </h6>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="container">
+            <div class="social-media">
+                <a href="https://www.facebook.com"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.instagram.com"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://github.com"><i class="fa-brands fa-github"></i></a>
+            </div>
+    
+            <p>Copy Right 2023 © By team 1  <a href="home">Marketing</a> All Rights Reserved</p>
+        </div>
+    </div>
+
+
+    <style>
+        .footer {
+              text-align: center;
+              background-color: #333333;
+              padding: 50px 0px;
+          }
+          
+          .footer .social-media a {
+              padding: 10px;
+              color: white;
+              font-size: 18;
+              font-weight: 800;
+          }
+          
+          .footer .social-media a:hover {
+              color: #FF305B;
+          }
+          
+          .footer p {
+              color: white;
+              padding: 20px;
+          }
+          
+          .footer p a {
+              color: #FF305B;
+              text-decoration: none;
+          }
+          
+          .footer p a:hover {
+              text-decoration: underline;
+          }
+          .navbar {
+        background-color: #333;
+        padding: 10px;
+    }
+
+    .navbar h2 {
+        color: #fff;
+        font-size: 24px;
+        margin-right: 20px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 10px;
+    }
+
+    .navbar-nav .nav-link {
+        color: #fff;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ffc107;
+    }
+
+    /* Active Link Styling */
+    .navbar-nav .nav-item .active {
+        color: #ffc107 !important;
+    }
+
+    /* Dropdown Styling */
+    .navbar-nav .nav-item .dropdown .nav-link {
+        position: relative;
+    }
+
+    .navbar-nav .nav-item .dropdown .nav-link::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -8px;
+        transform: translateY(-50%);
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid #fff;
+    }
+
+    .navbar-nav .nav-item .dropdown .nav-link:hover::after {
+        border-left-color: #ffc107;
+    }
+
+    /* Welcome Message Styling */
+    .navbar-nav .nav-item:last-child .nav-link {
+        margin-left: 20px;
+    }
+    body {
+  background-color: #ffffff;
+  font-family: "Titillium Web", sans-serif;
+}
+
+.inputForm {
+  background-color: #333333;
+  box-shadow: -5px 2px 54px -9px rgb(0 0 0);
+}
+.form-control {
+  color: #fff !important;
+}
+.form-control:focus {
+  background-color: #24353f;
+}
+input:focus {
+  box-shadow: 0 0 0 0 transparent !important;
+}
+.inputForm h1 {
+  font-size: 40px;
+  padding: 20px;
+}
+.inputForm input {
+  background-color: transparent;
+}
+.inputForm a {
+  text-decoration: none;
+  color: #fff;
+}
+/* ?css about Home page */
+.home-massage {
+  background-color: #24343f;
+  box-shadow: -5px 2px 54px -9px rgb(0 0 0);
+  padding: 48px;
+}
+    </style>
+    
+</body>
+
+</html>
+

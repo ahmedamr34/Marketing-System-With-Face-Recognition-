@@ -1,0 +1,237 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.nav-img{
+    width: 15%;
+}
+.home{
+    height: 100vh;
+}
+.carousel-inner{
+    height: 100%;
+}
+.leftPart{
+    position: absolute;
+    left: 0;
+    top: 50%;
+}
+.carousel-control-next, .carousel-control-prev{
+
+    position: unset;
+    opacity: 1;
+    width: unset;
+    border: 1px solid white;
+
+}
+.btnContent{
+    position: relative;
+    padding: 15px;
+}
+.layer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 100%;
+    background-color: white;
+    transition: 0.5s all;
+    z-index: -1;
+}
+.carousel-control-next:hover .layer, .carousel-control-prev:hover .layer{
+
+    right: 0;
+
+}
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    background-image: unset;
+}
+.carousel-control-next i, .carousel-control-prev i{
+    z-index: 3;
+    transition: 0.5s all;
+}
+.carousel-control-next:hover i, .carousel-control-prev:hover i{
+    color: red;
+}
+.text{
+    font-size: 80px;
+    position: absolute;
+    left: 130%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    transition: 2s all;
+    width: 50%;
+}
+.carousel-item.active .text{
+
+    left: 50%;
+
+}
+.carousel-item{
+    overflow: hidden;
+}
+
+.title{
+    position: relative;
+}
+.title h2{
+    font-size: 50px;
+    font-weight: 900;
+    z-index: 99999;
+}
+.title h3{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: rgb(204, 204, 204);
+    font-weight: 900;
+    z-index: 1;
+
+}
+.navbar{
+    z-index: 999999999;
+    position: fixed;
+    width: 100%;
+}
+.navbar a{
+    color: black;
+
+}
+
+.afterr{
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    margin: auto;
+
+}
+.icon4{
+    font-size: 30px;
+    line-height: 32px;
+    color: var(--mainColor);
+}
+.service2 h3{
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.section4 p{
+    color: #999;
+}
+.service2 h3:hover{
+    color: var(--mainColor);
+}
+.service2{
+    width: 90%;
+    /* margin-top: 30px; */
+    margin: auto;
+    margin-top: 40px;
+    padding-bottom: 50px;
+  
+   
+}
+.indicator-item img{
+    width: 110px !important;
+    height: 110px !important;
+}
+
+.indicator-item img.active{
+    width: 140px !important;
+    height: 140px !important;
+}
+
+.single-box p{
+    width: 400px;
+    margin: auto;
+}
+
+.client-info h3 {
+    font-size: 16px;
+    line-height: 16px;
+    margin: 0;
+}
+
+.client-info{
+    display: none;
+}
+
+.indicator-item img.active:first-of-type + div{
+    display: block;
+}
+
+.translate-middle{
+    opacity: 90%;
+font-size: large;
+position: relative;
+z-index: -1;
+}
+.lag{
+    height: auto;
+}
+.team{
+        width: 100%;
+}
+
+.members .member
+{
+    background-color: #09c;
+    width:25%;
+    position: relative;
+    border:5px solid #fff;
+    overflow: hidden;
+    float: left;
+}
+.member img{
+    width: 100%;
+    transition: all 1s;
+    transition-delay: 1s;
+}
+.member .member-caption{
+    background-color: rgba(42,63,85,0.7);
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    color: #fff;
+    text-align: center;
+    transition: all 1s;
+    opacity: 0;
+}
+.member-caption h2{
+    background-color: #2A3F55;
+    padding: 20px 0;
+    position: relative;
+    top: 0;
+    left:100%;
+    transition: all 1s;
+    transition-delay: 2s;
+}
+.member-caption p{
+    font-size: 20px;
+    padding: 20px;
+    line-height: 30px;
+    position: relative;
+    top: 0;
+    left:100%;
+    transition: all 1s;
+    transition-delay: 3s;
+}
+
+.member:hover .member-caption{
+    opacity: 1;
+    transform: rotate(360deg);
+}
+.member:hover img{
+    transform: scale(1.3);
+}
+.member:hover h2,.member:hover p{
+    left: 0;
+}
+

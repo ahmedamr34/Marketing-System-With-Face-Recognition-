@@ -1,0 +1,182 @@
+{% extends 'test.html' %}
+{%load static%}
+<!DOCTYPE html>
+<html>
+{% block content %}
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Custom styles for the dashboard */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            display: block;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #Dashhh{
+            margin-top: 55px;
+            margin-bottom: 110px;
+            max-width: 1200px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .user-profile h3 {
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+        .user-profile p {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #777;
+        }
+        .hh{
+            color: #333;
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .add-order-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .add-order-btn:hover {
+            background-color: #004085;
+            color: #fff;
+        }
+        .delete-btn {
+        padding: 6px 12px;
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        text-transform: uppercase;
+        }
+        .edit-btn {
+        padding: 6px 12px;
+        background-color: #faa303;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="Dashhh">
+        <h2 class="hh">Welcome to your Dashboard, {{ user.username }}</h2>
+        <br>
+        <div class="user-profile">
+            <img src="{{ user.image.url }}" alt="Profile Picture">
+            <div>
+                <h3 class="hh">{{ user.username }}</h3>
+                <p>{{ user.email }}</p>
+                <a class="add-order-btn" href="{% url 'EditProfile' %}">Edit Profile</a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <h4 class="hh">Your Ads</h4>
+        <table class="table">
+            <tbody>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>Company Name</th>
+                        <th>Brand Name</th>
+                        <th>Ad Holder</th>
+                        <th>Ad place</th>
+                        <th>Ad Price</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Review</th>
+                    </tr>
+                </thead>
+                {% for order in user.order_set.all %}
+                    {% if order.is_active %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.product_name }}</td>
+                            <td>{{ order.company_name }}</td>
+                            <td>{{ order.brand_name }}</td>
+                            <td>{{ order.AddHolder_name }}</td>
+                            <td>{{ order.place }}</td>
+                            <td>{{ order.product_price }}</td>
+                            <td>{{ order.start_date }}</td>
+                            <td>{{ order.end_date }}</td>
+                            <th>Approved</th>
+                            <th><a href="{% url 'simulation' %}">Press here</a></th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.product_name }}</td>
+                            <td>{{ order.company_name }}</td>
+                            <td>{{ order.brand_name }}</td>
+                            <td>{{ order.AddHolder_name }}</td>
+                            <td>{{ order.place }}</td>
+                            <td>{{ order.product_price }}</td>
+                            <td>{{ order.start_date }}</td>
+                            <td>{{ order.end_date }}</td>
+                            <th>Pending..</th>
+                            <th> <a href="{% url 'edit' order.id %}">Edit</a></th>
+                            <th> <a href="{% url 'delete' order.id %}">Delete</a></th>
+                        </tr>
+                    {% endif %}
+                    {% empty %}
+                        <tr>
+                            <td colspan="10">No orders found.</td>
+                    
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="add-order-btn" href="{% url 'order' %}">Add Order</a>
+        <br>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+{% endblock %}
+</html>

@@ -1,0 +1,266 @@
+{% extends 'test.html' %}
+{%load static%}
+{% block content %}
+<!-- your_template.html -->
+<br>
+<br>
+<br>
+<div class="container" id="Dashhh">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      <label for="{{ form.user.id_for_label }}">Username: {{ request.user.username }}</label>
+      <input type="hidden" id="{{ form.user.id_for_label }}" name="{{ form.user.html_name }}" value="{{ request.user.username }}" readonly>
+    </div>
+    <br>
+    <div>
+      <label for="{{ form.company_name.id_for_label }}">Company Name:</label>
+      {{ form.company_name }}
+    </div>
+    <div>
+      <label for="{{ form.brand_name.id_for_label }}">Brand Name:</label>
+      {{ form.brand_name }}
+    </div>
+    <div>
+      <label for="{{ form.product_name.id_for_label }}">Product Name:</label>
+      {{ form.product_name }}
+    </div>
+    <div>
+      <label for="{{ form.product_category.id_for_label }}">Product Category:</label>
+      {{ form.product_category }}
+    </div>
+    <div>
+      <label for="{{ form.product_description.id_for_label }}">Product Description:</label>
+      {{ form.product_description }}
+    </div>
+    <div>
+      <label for="{{ form.AddHolder_name.id_for_label }}">AdHolder Website:</label>
+      <select name="{{ form.AddHolder_name.html_name }}" id="{{ form.AddHolder_name.id_for_label }}">
+          {% for website in form.AddHolder_name.field.queryset %}
+          <option value="{{ website.pk }}" data-add-place="{{ website.place }}" data-price="{{ website.price }}">
+              {{ website.name }} , {{ website.place }} , {{ website.price }}
+          </option>
+          {% endfor %}
+      </select>
+      <input type="hidden" id="selectedHolderName" name="selectedHolderName">
+  </div>
+  
+  <div>
+      <label for="{{ form.place.id_for_label }}">Place:</label>
+      <input type="text" id="{{ form.place.id_for_label }}" name="{{ form.place.html_name }}" readonly>
+  </div>
+
+  <div>
+    <label for="{{ form.place.id_for_label }}">Price (Per Day):</label>
+    <input type="text" id="selectedPlacePrice" name="selectedPlacePrice" readonly>
+  </div>
+
+    <div>
+      <label for="{{ form.image.id_for_label }}">Image:</label>
+      {{ form.image }}
+      <span class="note">Note : size of images for header and footer should be 795*120, and for the right and left should be 180*731.</span>
+    </div>
+<br>
+    <div>
+        <label for="{{ form.start_date.id_for_label }}">Start Date:</label>
+        <input type="date" id="{{ form.start_date.id_for_label }}" name="{{ form.start_date.html_name }}" value="{{ form.start_date.value|default_if_none:'' }}">
+    </div>
+
+    <br>
+
+    <div>
+        <label for="{{ form.end_date.id_for_label }}">End Date:</label>
+        <input type="date" id="{{ form.end_date.id_for_label }}" name="{{ form.end_date.html_name }}" value="{{ form.end_date.value|default_if_none:'' }}">
+    </div>
+
+    <br>
+
+    <div>
+      <label for="{{ form.product_price.id_for_label }}">Total Ad Price:</label>
+      <input type="text" id="{{ form.product_price.id_for_label }}" name="{{ form.product_price.html_name }}" value="{{ form.product_price.value|default_if_none:'0' }}" readonly>
+    </div>
+
+    <br>
+    <!-- Submit button -->
+    <button type="submit">Save</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </form>
+</div>
+
+<br>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function() {
+        // Get the dropdown element
+        var addHolderSelect = $('#{{ form.AddHolder_name.id_for_label }}');
+        // Add event listener for select change
+        addHolderSelect.on('change', function() {
+            // Get the selected option
+            var selectedOption = $(this).find('option:selected');
+            // Get the value of data-add-place attribute
+            var selectedPlace = selectedOption.data('add-place');
+            // Set the value to the input field
+            var placeInput = $('#{{ form.place.id_for_label }}');
+            placeInput.val(selectedPlace);
+        });
+    });
+
+  $(document).ready(function() {
+  $('#id_AddHolder_name').on('change', function() {
+    var selectedOption = $(this).find('option:selected');
+    var adholder = selectedOption.text().split(',')[0].trim();
+    var addPlace = selectedOption.data('add-place');
+    var price = selectedOption.data('price');
+
+    $('#selectedHolderName').val(adholder);
+    $('#selectedPlaceName').val(addPlace);
+    $('#selectedPlacePrice').val(price);
+  });
+});
+
+  var today = new Date().toISOString().split("T")[0];
+  document.getElementById("{{ form.start_date.id_for_label }}").min = today;
+  document.getElementById("{{ form.end_date.id_for_label }}").min = today;
+
+  $(document).ready(function() {
+  // Function to calculate the total price
+  function calculateTotalPrice() {
+    var price = parseInt($('#selectedPlacePrice').val());
+    var startDate = new Date($('#{{ form.start_date.id_for_label }}').val());
+    var endDate = new Date($('#{{ form.end_date.id_for_label }}').val());
+
+    // Calculate the number of days between start date and end date
+    var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    var numDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    // Calculate the total price
+    var totalPrice = isNaN(price) ? 0 : price * numDays;
+
+    // Set the calculated price in the ad price field
+    $('#{{ form.product_price.id_for_label }}').val(totalPrice);
+  }
+
+  // Calculate the total price when the start date or end date changes
+  $('#{{ form.start_date.id_for_label }}, #{{ form.end_date.id_for_label }}').on('change', function() {
+    calculateTotalPrice();
+  });
+
+  // Calculate the total price initially
+  calculateTotalPrice();
+});
+
+</script>
+
+<style>
+   /* your_stylesheet.css */
+
+/* Form container */
+.form-container {
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center the form content horizontally */
+}
+
+/* Form labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #000000;
+  text-align: left;
+}
+
+/* Form input fields */
+input[type="text"],
+textarea {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Form select fields */
+select {
+  width: 30%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  background-color: #fff;
+  text-align: center;
+}
+
+/* Form file input */
+input[type="file"] {
+  margin-top: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form submit button */
+button[type="submit"] {
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/* Form field errors */
+.error-message {
+  color: #ff0000;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+/* Success message */
+.success-message {
+  color: #008000;
+  margin-top: 5px;
+  font-size: 12px;
+}
+#Dashhh{
+            margin-top: 55px;
+            margin-bottom: 110px;
+            max-width: 700px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.note {
+    color: gray;
+    font-size: 15px;
+  }
+
+  </style>
+{% endblock %}
+
+
+  
+  
+
+  
+  
